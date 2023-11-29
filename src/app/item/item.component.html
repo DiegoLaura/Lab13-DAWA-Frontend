@@ -1,0 +1,98 @@
+<div class="container mt-4">
+    <h2>Videojuegos</h2>
+
+    <div class="form-group">
+        <label for="search">Buscar:</label>
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" name="search" placeholder="Ingrese término de búsqueda">
+    </div>
+
+    <!-- Formulario para crear/editar un videojuego -->
+    <form (ngSubmit)="currentItem._id ? updateItem(currentItem._id, currentItem) : createItem(currentItem)"
+        class="was-validated">
+        <div class="form-group">
+            <label for="title">Título:</label>
+            <input type="text" class="form-control" [(ngModel)]="currentItem.title" name="title" required>
+            <div class="invalid-feedback">
+                El título es un campo obligatorio.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="developer">Desarrollador:</label>
+            <input type="text" class="form-control" [(ngModel)]="currentItem.developer" name="developer" required>
+            <div class="invalid-feedback">
+                El desarrollador es un campo obligatorio.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="releaseYear">Año de Lanzamiento:</label>
+            <input type="number" class="form-control" [(ngModel)]="currentItem.releaseYear" name="releaseYear" required>
+            <div class="invalid-feedback">
+                El año de lanzamiento es un campo obligatorio.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="genre">Género:</label>
+            <input type="text" class="form-control" [(ngModel)]="currentItem.genre" name="genre" required>
+            <div class="invalid-feedback">
+                El género es un campo obligatorio.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="platform">Plataforma:</label>
+            <input type="text" class="form-control" [(ngModel)]="currentItem.platform" name="platform" required>
+            <div class="invalid-feedback">
+                La plataforma es un campo obligatorio.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="rating">Calificación:</label>
+            <input type="number" class="form-control" [(ngModel)]="currentItem.rating" name="rating">
+        </div>
+
+        <div class="form-group">
+            <label for="image">Imagen:</label>
+            <input type="file" class="form-control-file" (change)="onFileSelected($event)" accept="image/*" id="image">
+        </div>
+        <br>         
+
+        <button type="submit" class="btn btn-primary">{{currentItem._id ? 'Actualizar' : 'Agregar'}}</button>
+    </form>
+
+    <hr>
+
+    <!-- Lista de videojuegos -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Desarrollador</th>
+                <th>Año</th>
+                <th>Género</th>
+                <th>Plataforma</th>
+                <th>Calificación</th>
+                <th>Imagen</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let game of filteredItems">
+                <td>{{ game.title }}</td>
+                <td>{{ game.developer }}</td>
+                <td>{{ game.releaseYear }}</td>
+                <td>{{ game.genre }}</td>
+                <td>{{ game.platform }}</td>
+                <td>{{ game.rating }}</td>
+                <td><img [src]="game.imageUrl" alt="Imagen del juego" width="100"></td>
+                <td>
+                    <button class="btn btn-sm btn-primary" (click)="editItem(game._id)">Editar</button>
+                    <button class="btn btn-sm btn-danger" (click)="deleteItem(game._id)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
